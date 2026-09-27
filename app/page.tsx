@@ -770,7 +770,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans antialiased selection:bg-blue-500 selection:text-white overflow-x-hidden">
 
-      {/* --- 1. HEADER NAVBAR (ปรับแต่งให้รองรับมือถือแบบ 100% ไม่ล้นจอ) --- */}
+      {/* --- 1. HEADER NAVBAR --- */}
       <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-xl border-b border-slate-800/80 transition-all">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-1">
           
