@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Bus, MapPin, ArrowRight, UserCheck } from 'lucide-react';
 
-export default function SearchResultsPage() {
+function SearchResultsContent() {
   const searchParams = useSearchParams();
   const origin = searchParams.get('origin') || 'ALL';
   const dest = searchParams.get('dest') || 'ALL';
@@ -144,5 +144,13 @@ export default function SearchResultsPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function SearchResultsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-600 font-bold text-sm">กำลังโหลดผลการค้นหา...</div>}>
+      <SearchResultsContent />
+    </Suspense>
   );
 }
