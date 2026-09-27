@@ -92,15 +92,31 @@ export default function DayTourManager() {
     advanceDays: '2',
     origin: 'กรุงเทพฯ',
     destinations: ['ตลาดน้ำอัมพวา', 'ตลาดแม่กลอง'],
+    tierBadge: '',
     serviceClass: 'Toyota Commuter VIP (13 ที่นั่ง)',
     isEveryday: false,
     tourDate: new Date().toISOString().split('T')[0],
     pickupTime: '08:00 น.',
-    
-    adultPrice: '2,900',
-    childPrice: '1,900',
+    startDate: new Date().toISOString().split('T')[0],
+    endDate: new Date().toISOString().split('T')[0],
+    isCustomDuration: false,
+    customDays: '1',
+    customNights: '0',
+    priceDisplayType: 'per_person',
+    totalPackagePrice: '2,900',
+    minPackagePax: '1',
+    adultPrice: '2900',
+    childPrice: '1900',
+    infantPrice: '500',
+    minBookingPax: '1',
     rentalHours: '10 ชั่วโมง',
-
+    driverAccommodationFee: '0',
+    fuelPolicy: '',
+    tollPolicy: '',
+    hotelName: '',
+    roomType: '',
+    hotelLocation: '',
+    hotelImages: [] as string[],
     itineraryDetails: 'ทริปเที่ยววันเดียว 1 Day Trip ดื่มด่ำวิถีชีวิตริมน้ำและตลาดร่มหุบ',
     inclusions: '• รถตู้ VIP และคนขับสุภาพ',
     exclusions: '• ค่าเข้าชมสถานที่และอาหารกลางวัน',
@@ -114,6 +130,11 @@ export default function DayTourManager() {
 
     images: [] as string[],
   });
+
+  const handleUploadSlipAndFinish = () => {
+    setIsSlipModalOpen(false);
+    alert('บันทึกการจองและแนบสลิปเรียบร้อยแล้ว!');
+  };
 
   const formatThaiDateShort = (dateString: string) => {
     if (!dateString) return '';
@@ -501,6 +522,7 @@ export default function DayTourManager() {
 
       alert('จองเดย์ทัวร์สำเร็จ! ข้อมูลถูกบันทึกลงระบบเรียบร้อยแล้ว');
       setIsBookingModalOpen(false);
+      setIsSlipModalOpen(true);
     } catch (error: any) {
       console.error('Error saving booking:', error);
       alert('เกิดข้อผิดพลาดในการบันทึกการจอง: ' + error.message);
@@ -922,7 +944,7 @@ export default function DayTourManager() {
         </div>
       )}
 
-      {/* --- MODAL: ฟอร์มจองบริการ (แก้ไขเงื่อนไขการล็อกจำนวนที่นั่งผู้ใหญ่/เด็กแบบสมบูรณ์สองทิศทาง) --- */}
+      {/* --- MODAL: ฟอร์มจองบริการ --- */}
       {isBookingModalOpen && selectedTripForBooking && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto no-scrollbar">
@@ -1002,7 +1024,6 @@ export default function DayTourManager() {
                       const maxSeats = extractMaxSeats(selectedTripForBooking.service_class);
                       const bookedSeats = getBookedSeatsForTrip(selectedTripForBooking.id);
                       const availableSeats = Math.max(0, maxSeats - bookedSeats);
-                      // ล็อกไม่ให้ผู้ใหญ่เกินที่นั่งว่างทั้งหมดลบด้วยจำนวนเด็กปัจจุบัน
                       const maxAdultAllowed = Math.max(1, availableSeats - bookingForm.child_count);
 
                       return (
@@ -1030,7 +1051,6 @@ export default function DayTourManager() {
                       const maxSeats = extractMaxSeats(selectedTripForBooking.service_class);
                       const bookedSeats = getBookedSeatsForTrip(selectedTripForBooking.id);
                       const availableSeats = Math.max(0, maxSeats - bookedSeats);
-                      // ล็อกไม่ให้เด็กเกินที่นั่งว่างทั้งหมดลบด้วยจำนวนผู้ใหญ่ปัจจุบัน
                       const maxChildAllowed = Math.max(0, availableSeats - bookingForm.adults_count);
 
                       return (
